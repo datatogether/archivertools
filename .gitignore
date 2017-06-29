@@ -1,2 +1,7 @@
 #don't include the data.sqlite db in module
 data.sqlite
+
+#ignore build and distribution-related stuff
+build/*
+dist/*
+*.egg*
