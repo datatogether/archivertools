@@ -46,19 +46,19 @@ class Archiver:
         scraperwiki.sqlite.execute("""
                         CREATE TABLE IF NOT EXISTS child_urls (
                         run_id INTEGER,
-                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id),
                         url TEXT UNIQUE NOT NULL,
-                        timestamp TEXT
+                        timestamp TEXT,
+                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id)
                         )""")
         scraperwiki.sqlite.execute("""
                         CREATE TABLE IF NOT EXISTS files (
                         run_id INTEGER,
-                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id),
                         file_contents BLOB NOT NULL,
                         filename TEXT NOT NULL,
                         file_SHA256 TEXT NOT NULL,
                         comments TEXT,
-                        timestamp TEXT
+                        timestamp TEXT,
+                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id)
                         )""")
 
     def addURL(self,url):
