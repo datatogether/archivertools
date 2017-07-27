@@ -47,41 +47,6 @@ class Archiver:
         session.add(sqlalchemy_obj)
         session.commit()
 
-    def __makeTables(self):
-        """
-        Creates tables in the sqlite db
-        table runs_metadata stores the metadata associated whenever a new run is started
-        table child_urls stores urls to be populated back into the Data Together crawler
-        table files stores binary files of scraped data to be stored on Data Together
-        """
-        scraperwiki.sqlite.execute("""
-                        CREATE TABLE IF NOT EXISTS runs_metadata (
-                        run_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        url TEXT,
-                        UUID TEXT,
-                        timestamp TEXT,
-                        body_content TEXT,
-                        body_SHA256 TEXT,
-                        headers TEXT
-                        )""")
-        scraperwiki.sqlite.execute("""
-                        CREATE TABLE IF NOT EXISTS child_urls (
-                        run_id INTEGER,
-                        url TEXT UNIQUE NOT NULL,
-                        timestamp TEXT,
-                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id)
-                        )""")
-        scraperwiki.sqlite.execute("""
-                        CREATE TABLE IF NOT EXISTS files (
-                        run_id INTEGER,
-                        file_contents BLOB NOT NULL,
-                        filename TEXT NOT NULL,
-                        file_SHA256 TEXT NOT NULL,
-                        comments TEXT,
-                        timestamp TEXT,
-                        FOREIGN KEY(run_id) REFERENCES runs_metadata(run_id)
-                        )""")
-
     def addURL(self,url):
         """
         adds a child URL to the 'child_urls' table to be added back into the crawler
