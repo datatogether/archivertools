@@ -1,4 +1,9 @@
 from setuptools import setup
+import os
+def read(fname):
+    with open(os.path.join(os.path.dirname(__file__), fname)) as f:
+        result = f.read()
+    return result
 
 setup(name = 'archivertools',
         version = '0.0.1.dev1',
@@ -8,6 +13,6 @@ setup(name = 'archivertools',
         author_email = 'email.jeffrey.liu@gmail.com',
         license = 'GNU AGPL v3',
         packages = ['archivertools'],
-        install_requires = ['scraperwiki',
-            'requests'])
+        install_requires =read('requirements.txt').splitlines()
+        )
 
