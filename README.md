@@ -26,10 +26,9 @@ archiver.addURL(url)
 ```
 
 ### Saving files/data
-Save files to be uploaded to Data Together pipeline. Automatically computes hash
-save the file with the original filename if one exists, otherwise, include a descriptive filename including the appropriate extension
+Add a local file to be uploaded to Data Together pipeline. Automatically computes hash
+
 ```python
-with open(filename,'r') as file_contents:
-    comments='information about the file, such as encoding, metadata, etc' #optional
-    archiver.addFile(file_contents,filename,comments)
+comments='information about the file, such as encoding, metadata, etc' #optional
+archiver.addFile(filename,comments)
 ```
