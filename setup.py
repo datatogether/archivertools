@@ -6,7 +6,7 @@ def read(fname):
     return result
 
 setup(name = 'archivertools',
-        version = '0.0.1.dev1',
+        version = '0.0.2.dev1',
         description = 'tools for use with Data Together morph.io archival scraping work',
         url = 'https://github.com/datatogether/archivertools',
         author = 'Jeffrey Liu',
