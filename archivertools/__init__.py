@@ -7,34 +7,46 @@ import sys
 from sqlalchemy.ext.declarative import declarative_base
 
 engine = sqla.create_engine('sqlite:///data.sqlite')
-Base = declarative_base() # base class for sqlalchemy objects
+Base = declarative_base()  # base class for sqlalchemy objects
+
 
 class Archiver:
     """
-    Class for interfacing with databases for Data Together's morph.io scraper integration
+    Class for interfacing with databases for Data Together's
+    morph.io scraper integration
+
+    Attributes:
+        content (TEXT): Response body for URL
+        content_hash (TEXT): Hex digest of SHA256 hash of body
+        headers (TEXT): HTTP headers of URL
+        run_metadata (TYPE): Description
+
     """
-    def __init__(self,url,UUID):
-        #self.__makeTables()
+    def __init__(self, url, UUID):
+        # self.__makeTables()
         current_time = datetime.now()
         r = requests.get(url)
+        self.url = url
         self.headers = json.dumps(dict(r.headers))
-        self.content = r.content #response body, TODO: may need to handle binary data differently vs html
-        #hex representation of SHA-256 hash of body
+        self.content = r.content  # response body, TODO: may need to handle binary data differently vs html
+        # hex representation of SHA-256 hash of body
         if sys.version_info.major == 2:
             # text is first encoded as utf-8 for python 2
-            self.content_hash = hashlib.sha256(self.content.encode('utf-8')).hexdigest()
+            self.content_hash = hashlib.sha256(self.content.encode('utf-8'))\
+                                       .hexdigest()
         elif sys.version_info.major == 3:
-            # in python3 all strings are by default utf-8 encoded, and encode() method has been removed;
+            # in python3 all strings are by default utf-8 encoded, and encode()
+            # method has been removed from strings
             self.content_hash = hashlib.sha256(self.content).hexdigest()
         self.__Session = sqla.orm.sessionmaker()
         self.__engine = engine
-        self.__Session.configure(bind=self.__engine,expire_on_commit=False)
-        payload = {'url':url,\
-                'UUID':UUID,\
-                'timestamp':current_time,\
-                'body_content':self.content,\
-                'body_SHA256':self.content_hash,\
-                'headers':self.headers}
+        self.__Session.configure(bind=self.__engine, expire_on_commit=False)
+        payload = {'url': url,
+                   'UUID': UUID,
+                   'timestamp': current_time,
+                   'body_content': self.content,
+                   'body_SHA256': self.content_hash,
+                   'headers': self.headers}
         # create instance of _RunMetadata and write to table
         self.run_metadata = _RunMetadata(**payload)
         self.__add(self.run_metadata)
