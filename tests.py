@@ -30,7 +30,7 @@ class URLTest(unittest.TestCase):
             raise
 
 
-class fileTest(unittest.TestCase):
+class FileTest(unittest.TestCase):
     def setUp(self):
         self.archiver = archivertools.Archiver('http://example.org', '0000')
         self.assertIsInstance(self.archiver, archivertools.Archiver)
@@ -40,6 +40,19 @@ class fileTest(unittest.TestCase):
             test_file.write('contents of test file\n')
         self.archiver.addFile('test.txt')
         os.remove('test.txt')
+
+
+class LoginTest(unittest.TestCase):
+    def setUp(self):
+        self.archiver = archivertools.Archiver('http://example.org', '0000')
+        self.assertIsInstance(self.archiver, archivertools.Archiver)
+
+    def test_commit(self):
+        try:
+            self.archiver.commit()
+        except:
+            raise
+
 
 
 if __name__ == '__main__':

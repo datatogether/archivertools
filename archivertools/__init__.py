@@ -3,8 +3,10 @@ import hashlib
 from datetime import datetime
 import json
 import sqlalchemy as sqla
-import sys
+import sys, os
+import jwt
 from sqlalchemy.ext.declarative import declarative_base
+import logging
 
 engine = sqla.create_engine('sqlite:///data.sqlite')
 Base = declarative_base()  # base class for sqlalchemy objects
@@ -19,11 +21,10 @@ class Archiver:
         content (TEXT): Response body for URL
         content_hash (TEXT): Hex digest of SHA256 hash of body
         headers (TEXT): HTTP headers of URL
-        run_metadata (TYPE): Description
+        run_metadata (RunMetadata): Metadata of current run
 
     """
     def __init__(self, url, UUID):
-        # self.__makeTables()
         current_time = datetime.now()
         r = requests.get(url)
         self.url = url
@@ -59,7 +60,27 @@ class Archiver:
         session.add(sqlalchemy_obj)
         session.commit()
 
-    def addURL(self,url):
+    def __getJWT(self):
+        """
+        """
+        try:
+            api_key = os.environ['MORPH_DT_API_KEY']
+        except KeyError:
+            raise KeyError('Data Together API Key not set. Set the environment variable MORPH_DT_API_KEY '
+                    'to your Data Together API Key. For instructions on how to do this in morph.io, see '
+                    'https://morph.io/documentation/secret_values')
+        h = {'access_token':api_key}
+        token = requests.post('https://ident.archivers.space/jwt', headers=h).content
+        pubkey = requests.get('https://ident.archivers.space/publickey').content
+        try:
+            jwt.decode(token, pubkey, algorithms=['RS256'])
+        except jwt.exceptions.DecodeError as E:
+            logging.error('Could not verify Data Together signature on JWT')
+            raise
+        return token
+
+
+    def addURL(self, url):
         """
         adds a child URL to the 'child_urls' table to be added back into the crawler
         """
@@ -77,7 +98,7 @@ class Archiver:
                 raise
 
 
-    def addFile(self,filename,comments=None,buffer_size=65536):
+    def addFile(self, filename, comments=None, buffer_size=65536):
         """
         adds a local file named 'filename' as a binary blob into the 'files' table to be ingested into Data Together
         automatically hashes file contents and stores it in the db
@@ -110,6 +131,18 @@ class Archiver:
                     'timestamp':current_time}
             file_object = _File(**payload)
             self.__add(file_object)
+
+
+    def commit(self):
+        """
+        To be called at the end of a scrape to notify Data Together servers that scrape has completed
+        Authenticates w/ DT servers via API key and JWT
+        """
+        token = self.__getJWT()
+        h = {'Authorization':'Bearer {}'.format(str(token,'utf-8'))}
+        r = requests.get('https://ident.archivers.space/session', headers=h)
+        r.raise_for_status()
+
 
 class _RunMetadata(Base):
     """
