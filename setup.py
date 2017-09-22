@@ -9,7 +9,7 @@ def read(fname):
 
 
 setup(name='archivertools',
-      version='0.0.2.dev1',
+      version='0.0.2.dev2',
       description='tools for use with Data Together'
                   'morph.io archival scraping work',
       url='https://github.com/datatogether/archivertools',

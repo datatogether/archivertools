@@ -62,6 +62,7 @@ class Archiver:
 
     def __getJWT(self):
         """
+        requests JWT from Data Together API. Requires that the environment variable MORPH_DT_API_KEY is set
         """
         try:
             api_key = os.environ['MORPH_DT_API_KEY']
@@ -104,9 +105,9 @@ class Archiver:
         automatically hashes file contents and stores it in the db
 
         Args:
-            filename: string representation of the filename of local file to be added to the database
-            comments: [optional] string any details about encoding, format, or how the data was extracted that may be useful to anyone who examines the data
-            buffer_size: [optional, default 64kb] size of buffer to use when computing SHA256 hash. Buffer should be used to keep the scraper memory-efficient. Setting buffer_size=0 hashes the file all at once
+            filename [str]: string representation of the filename of local file to be added to the database
+            comments [str]: [optional] string any details about encoding, format, or how the data was extracted that may be useful to anyone who examines the data
+            buffer_size [int]: [optional, default 64kb] size of buffer to use when computing SHA256 hash. Buffer should be used to keep the scraper memory-efficient. Setting buffer_size=0 hashes the file all at once
 
         """
         current_time = datetime.now()
@@ -137,11 +138,17 @@ class Archiver:
         """
         To be called at the end of a scrape to notify Data Together servers that scrape has completed
         Authenticates w/ DT servers via API key and JWT
+
+        Raises requests.exceptions.HTTPError if status code other than 200 returned
         """
-        token = self.__getJWT()
-        h = {'Authorization':'Bearer {}'.format(str(token,'utf-8'))}
+        if sys.version_info.major == 2:
+            token = self.__getJWT()
+        elif sys.version_info.major == 3:
+            token = str(self.__getJWT(),'utf-8')
+        h = {'Authorization':'Bearer {}'.format(token)}
         r = requests.get('https://ident.archivers.space/session', headers=h)
         r.raise_for_status()
+        logging.info('server responded with {}'.format(r.status_code))
 
 
 class _RunMetadata(Base):
