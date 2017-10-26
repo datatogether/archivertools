@@ -3,13 +3,13 @@
 
 [![GitHub](https://img.shields.io/badge/project-Data_Together-487b57.svg?style=flat-square)](http://github.com/datatogether)
 [![Slack](https://img.shields.io/badge/slack-Archivers-b44e88.svg?style=flat-square)](https://archivers-slack.herokuapp.com/)
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](./LICENSE) 
+[![License](https://img.shields.io/github/license/datatogether/archivertools.svg)](./LICENSE) 
 
 This is a package of tools to be used for scraping websites via morph.io into the Data Together pipeline.
 
 ## License & Copyright
 
-Copyright (C) <year> Data Together
+Copyright (C) 2017 Data Together  
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free Software
 Foundation, version 3.0.
@@ -26,7 +26,6 @@ We would love involvement from more people! If you notice any errors or would li
 
 We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/archivertools/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/archivertools/pulls)
 
-
 ## Installation
 Tested with Python 2.7, 3.6
 
@@ -34,7 +33,6 @@ Install via pip
 ```
 pip install archivertools
 ```
-
 
 ## Usage
 In order to authenticate to the Data Together servers, make sure the environment variable `MORPH_DT_API_KEY` is set. To do this in morph.io, see [the morph documentation on secret values](https://morph.io/documentation/secret_values#reading-python).
@@ -48,7 +46,7 @@ os.environment['MORPH_DT_API_KEY'] = 'the_text_of_your_dt_api_key'
 
 The Archiver class provides the interface for saving data that will be ingested onto Data Together. All of the data and files are stored in a local sqlite database called `data.sqlite`. It is important that you call the `Archiver.commit()` function at the end of your run to ensure that the data is ingested.
 
-### Initialization:
+### Initialization
 ```python
 from archivertools import Archiver
 
@@ -78,4 +76,3 @@ Run this function at the end of your scraper to let Data Together know that your
 ```python
 a.commit()
 ```
-
