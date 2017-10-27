@@ -26,19 +26,20 @@ We would love involvement from more people! If you notice any errors or would li
 
 We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/archivertools/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/archivertools/pulls)
 
-### Getting Started and Style Guide
+### Getting Started and Style Guides
 Refer to these resources to learn more about using Github, best practices for writing Python code, code linters to analyze your code for errors, and writing docstrings which describes what functions do.
 
+- [How to use Git Version Control](https://try.github.io/levels/1/challenges/1)
 - [Github's "Hello, World" Guides](https://guides.github.com/activities/hello-world/)
 - [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/)
-- Python linters:
-  - [PEP8 command line](Htps://pypi.python.org/pypi/pep8)
+- Python linters automatically check your code for style errors:
+  - [PEP8 command line](https://pypi.python.org/pypi/pep8)
   - [PEP8 online](http://pep8online.com/)
   - [sublime text PEP8](https://github.com/SublimeLinter/SublimeLinter-pep8)
   - [pycodestyle for Atom](https://github.com/AtomLinter/linter-pycodestyle)
   - [flake8 for vim](https://github.com/nvie/vim-flake8)
   - [flymake and flake8 for emacs](https://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc18 )
-- [Python docstring format (Google-style)](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+- Function documentation should follow the [Google-style Python docstring format](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
   - [sublime text autodocstring](https://packagecontrol.io/packages/AutoDocstring)
 
 ## Installation
