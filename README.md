@@ -33,7 +33,7 @@ Refer to these resources to learn more about using Github, best practices for wr
 - [Github's "Hello, World" Guides](https://guides.github.com/activities/hello-world/)
 - [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/)
 - Python linters automatically check your code for style errors:
-  - [PEP8 command line](Htps://pypi.python.org/pypi/pep8)
+  - [PEP8 command line](https://pypi.python.org/pypi/pep8)
   - [PEP8 online](http://pep8online.com/)
   - [sublime text PEP8](https://github.com/SublimeLinter/SublimeLinter-pep8)
   - [pycodestyle for Atom](https://github.com/AtomLinter/linter-pycodestyle)
