@@ -26,6 +26,21 @@ We would love involvement from more people! If you notice any errors or would li
 
 We use GitHub issues for [tracking bugs and feature requests](https://github.com/datatogether/archivertools/issues) and Pull Requests (PRs) for [submitting changes](https://github.com/datatogether/archivertools/pulls)
 
+### Getting Started and Style Guide
+Refer to these resources to learn more about using Github, best practices for writing Python code, code linters to analyze your code for errors, and writing docstrings which describes what functions do.
+
+- [Github's "Hello, World" Guides](https://guides.github.com/activities/hello-world/)
+- [PEP8 Python style guide](https://www.python.org/dev/peps/pep-0008/)
+- Python linters:
+  - [PEP8 command line](Htps://pypi.python.org/pypi/pep8)
+  - [PEP8 online](http://pep8online.com/)
+  - [sublime text PEP8](https://github.com/SublimeLinter/SublimeLinter-pep8)
+  - [pycodestyle for Atom](https://github.com/AtomLinter/linter-pycodestyle)
+  - [flake8 for vim](https://github.com/nvie/vim-flake8)
+  - [flymake and flake8 for emacs](https://www.emacswiki.org/emacs/PythonProgrammingInEmacs#toc18 )
+- [Python docstring format (Google-style)](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+  - [sublime text autodocstring](https://packagecontrol.io/packages/AutoDocstring)
+
 ## Installation
 Tested with Python 2.7, 3.6
 
@@ -76,3 +91,4 @@ Run this function at the end of your scraper to let Data Together know that your
 ```python
 a.commit()
 ```
+
