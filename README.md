@@ -57,7 +57,7 @@ For testing on your local system, you can set an environment variable within pyt
 ```python
 import os
 
-os.environment['MORPH_DT_API_KEY'] = 'the_text_of_your_dt_api_key'
+os.environ['MORPH_DT_API_KEY'] = 'the_text_of_your_dt_api_key'
 ```
 
 The Archiver class provides the interface for saving data that will be ingested onto Data Together. All of the data and files are stored in a local sqlite database called `data.sqlite`. It is important that you call the `Archiver.commit()` function at the end of your run to ensure that the data is ingested.
